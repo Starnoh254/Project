@@ -40,10 +40,10 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
         // here , we use the .use function to efficiently manage resources ( database connection ),
         // so the connection will be terminated if no longer need it !!
         val db = this.writableDatabase
-        val result : Long = db.insert("task",null,values)
+        val result : Long = db.insert("task1",null,values)
         // Check if there is result , -1 means an error occurred
 
-        if (result <= 0){
+        if (result < 0){
             Toast.makeText(context, "Failed to add task", Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(context, "Task added successfully", Toast.LENGTH_SHORT).show()
@@ -71,7 +71,7 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
 
         val task_id = getTaskByIdDescription(task_description)
         val result: Int = writableDatabase.use { db ->
-            db.delete("task","task_id = ?", arrayOf(task_id.toString()))
+            db.delete("task1","task_id = ?", arrayOf(task_id.toString()))
         }
         if (result == 0){
             Toast.makeText(context, "The deletion was unsuccessful ", Toast.LENGTH_SHORT).show()
@@ -86,10 +86,10 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
     fun getAllItems () : ArrayList<Tasks>{
         val tasks  = ArrayList<Tasks>()
         val db = this.readableDatabase
-        val query = "select * from task"
+        val query = "select * from task1"
         val cursor: Cursor = db.rawQuery(query,null)
 
-       while (cursor.moveToFirst()){
+       while (cursor.moveToNext()){
             val model = Tasks()
            model.taskId = cursor.getInt(cursor.getColumnIndex("task_id"))
            model.taskDescription = cursor.getString(cursor.getColumnIndex("task_description"))

@@ -1,19 +1,26 @@
 package com.starnoh.project.adapters
 
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.starnoh.project.R
+import com.starnoh.project.helpers.SQLiteTaskHelper
 import com.starnoh.project.models.Tasks
 
-class TaskAdapter( context : Context ,  var itemList: List<Tasks>) : RecyclerView.Adapter<TaskAdapter.ViewHolder>(){
+class TaskAdapter( val context : Context ,  var itemList: List<Tasks>) : RecyclerView.Adapter<TaskAdapter.ViewHolder>(){
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<MaterialTextView>(R.id.heading)
         var body = itemView.findViewById<MaterialTextView>(R.id.body)
+        var deleteById = itemView.findViewById<ImageView>(R.id.deleteById)
+        var root = itemView.findViewById<CardView>(R.id.cover)
 
     }
 
@@ -30,5 +37,10 @@ class TaskAdapter( context : Context ,  var itemList: List<Tasks>) : RecyclerVie
         val item = itemList[position]
         holder.title.text = item.taskTitle
         holder.body.text = item.taskDescription
+        holder.deleteById.setOnClickListener {
+            val helper = SQLiteTaskHelper(context = context)
+            helper.deleteTaskById(holder.body.text.toString())
+            holder.root.visibility = View.GONE
+        }
     }
 }
