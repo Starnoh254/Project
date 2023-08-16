@@ -1,5 +1,5 @@
 package com.starnoh.project.helpers
-// jj
+
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
