@@ -25,10 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
-
-
         taskTitle = findViewById(R.id.taskTitle)
         taskDescription = findViewById(R.id.taskDescription)
         dueDate = findViewById(R.id.dueDate)
@@ -52,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
 
     private fun showDatePickerDialog(){
@@ -72,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             month,
             day
         )
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 }
