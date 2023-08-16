@@ -13,15 +13,22 @@ import com.starnoh.project.models.Tasks
 
 class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db",null,3) {
 
+    companion object{
+        const val TABLE_NAME = "task1"
+        const val COLUMN_TASK_ID = "task_id"
+        const val COLUMN_TASK_TITLE = "task_title"
+        const val COLUMN_TASK_DESCRIPTION = "task_description"
+        const val COLUMN_DUE_DATE = "due_date"
+    }
 
 
     override fun onCreate(sql: SQLiteDatabase?) {
         // create your database table
-        sql?.execSQL("CREATE TABLE IF NOT EXISTS task1(task_id integer primary key autoincrement, task_title text, task_description text, due_date text)")
+        sql?.execSQL("CREATE TABLE IF NOT EXISTS ${TABLE_NAME}($COLUMN_TASK_ID integer primary key autoincrement, $COLUMN_TASK_TITLE text, $COLUMN_TASK_DESCRIPTION text, $COLUMN_DUE_DATE text)")
     }
 
     override fun onUpgrade(sql: SQLiteDatabase?, p1: Int, p2: Int) {
-        sql?.execSQL("DROP TABLE IF EXISTS task1")
+        sql?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
     }
     private fun restartActivity(){
         val intent = Intent(context,MainActivity::class.java)
@@ -40,7 +47,7 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
         // here , we use the .use function to efficiently manage resources ( database connection ),
         // so the connection will be terminated if no longer need it !!
         val db = this.writableDatabase
-        val result : Long = db.insert("task1",null,values)
+        val result : Long = db.insert("$TABLE_NAME",null,values)
         // Check if there is result , -1 means an error occurred
 
         if (result < 0){
@@ -54,12 +61,12 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
     }
     @SuppressLint("Range")
     fun getTaskByIdDescription(task_description: String): Int?{
-        val query = "select task_id from task1 where task_description = ? "
+        val query = "select $COLUMN_TASK_ID from $TABLE_NAME where $COLUMN_TASK_DESCRIPTION = ? "
         val cursor: Cursor = readableDatabase.rawQuery(query, arrayOf(task_description))
 
         var taskId : Int? = null
         if (cursor.moveToFirst()){
-            taskId = cursor.getInt(cursor.getColumnIndex("task_id"))
+            taskId = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_ID))
         }
         cursor.close()
         return taskId
@@ -71,7 +78,7 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
 
         val task_id = getTaskByIdDescription(task_description)
         val result: Int = writableDatabase.use { db ->
-            db.delete("task1","task_id = ?", arrayOf(task_id.toString()))
+            db.delete("$TABLE_NAME","$COLUMN_TASK_ID = ?", arrayOf(task_id.toString()))
         }
         if (result == 0){
             Toast.makeText(context, "The deletion was unsuccessful ", Toast.LENGTH_SHORT).show()
@@ -86,15 +93,15 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
     fun getAllItems () : ArrayList<Tasks>{
         val tasks  = ArrayList<Tasks>()
         val db = this.readableDatabase
-        val query = "select * from task1"
+        val query = "select * from $TABLE_NAME"
         val cursor: Cursor = db.rawQuery(query,null)
 
        while (cursor.moveToNext()){
             val model = Tasks()
-           model.taskId = cursor.getInt(cursor.getColumnIndex("task_id"))
-           model.taskDescription = cursor.getString(cursor.getColumnIndex("task_description"))
-           model.taskTitle = cursor.getString(cursor.getColumnIndex("task_title"))
-           model.dueDate = cursor.getString(cursor.getColumnIndex("due_date"))
+           model.taskId = cursor.getInt(cursor.getColumnIndex("$COLUMN_TASK_ID"))
+           model.taskDescription = cursor.getString(cursor.getColumnIndex("$COLUMN_TASK_DESCRIPTION"))
+           model.taskTitle = cursor.getString(cursor.getColumnIndex("$COLUMN_TASK_TITLE"))
+           model.dueDate = cursor.getString(cursor.getColumnIndex("$COLUMN_DUE_DATE"))
 
            tasks.add(model)
        }
