@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         viewTask = findViewById(R.id.viewTask)
 
         addTask.setOnClickListener {
-            val helper = SQLiteTaskHelper(applicationContext)
+            val helper = SQLiteTaskHelper.getInstance(applicationContext)
             if(taskTitle.text.toString().isEmpty() || taskDescription.text.toString().isEmpty() || dueDate.text.toString().isEmpty()){
                 Toast.makeText(applicationContext, "Please add values to the fields ", Toast.LENGTH_SHORT).show()
             }else{

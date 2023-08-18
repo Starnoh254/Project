@@ -38,7 +38,7 @@ class TaskAdapter( val context : Context ,  var itemList: List<Tasks>) : Recycle
         holder.title.text = item.taskTitle
         holder.body.text = item.taskDescription
         holder.deleteById.setOnClickListener {
-            val helper = SQLiteTaskHelper(context = context)
+            val helper = SQLiteTaskHelper.getInstance(context = context)
             helper.deleteTaskById(holder.body.text.toString())
             holder.root.visibility = View.GONE
         }

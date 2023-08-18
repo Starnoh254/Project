@@ -10,15 +10,30 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import com.starnoh.project.MainActivity
 import com.starnoh.project.models.Tasks
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db",null,3) {
+class SQLiteTaskHelper private constructor( var context: Context): SQLiteOpenHelper(context,"task.db",null,3) {
 
     companion object{
+        @Volatile
+        private var INSTANCE : SQLiteTaskHelper? = null
+
+        fun getInstance (context: Context): SQLiteTaskHelper{
+            return INSTANCE ?: synchronized(this){
+                val instance = SQLiteTaskHelper(context.applicationContext)
+                INSTANCE = instance
+                instance
+            }
+        }
+
         const val TABLE_NAME = "task1"
         const val COLUMN_TASK_ID = "task_id"
         const val COLUMN_TASK_TITLE = "task_title"
         const val COLUMN_TASK_DESCRIPTION = "task_description"
         const val COLUMN_DUE_DATE = "due_date"
+
+
     }
 
 
@@ -90,26 +105,29 @@ class SQLiteTaskHelper( var context: Context): SQLiteOpenHelper(context,"task.db
 
 
     @SuppressLint("Range")
-    fun getAllItems () : ArrayList<Tasks>{
-        val tasks  = ArrayList<Tasks>()
-        val db = this.readableDatabase
-        val query = "select * from $TABLE_NAME"
-        val cursor: Cursor = db.rawQuery(query,null)
+    suspend fun getAllItems () : ArrayList<Tasks> {
+        return withContext(Dispatchers.IO) {
+            val tasks = ArrayList<Tasks>()
+            val db = this@SQLiteTaskHelper.readableDatabase
+            val query = "select * from $TABLE_NAME"
+            val cursor: Cursor = db.rawQuery(query, null)
 
-       while (cursor.moveToNext()){
-            val model = Tasks()
-           model.taskId = cursor.getInt(cursor.getColumnIndex("$COLUMN_TASK_ID"))
-           model.taskDescription = cursor.getString(cursor.getColumnIndex("$COLUMN_TASK_DESCRIPTION"))
-           model.taskTitle = cursor.getString(cursor.getColumnIndex("$COLUMN_TASK_TITLE"))
-           model.dueDate = cursor.getString(cursor.getColumnIndex("$COLUMN_DUE_DATE"))
+            while (cursor.moveToNext()) {
+                val model = Tasks()
+                model.taskId = cursor.getInt(cursor.getColumnIndex("$COLUMN_TASK_ID"))
+                model.taskDescription =
+                    cursor.getString(cursor.getColumnIndex("$COLUMN_TASK_DESCRIPTION"))
+                model.taskTitle = cursor.getString(cursor.getColumnIndex("$COLUMN_TASK_TITLE"))
+                model.dueDate = cursor.getString(cursor.getColumnIndex("$COLUMN_DUE_DATE"))
 
-           tasks.add(model)
-       }
+                tasks.add(model)
+            }
 
-        cursor.close()
-        db.close()
+            cursor.close()
+            db.close()
 
-        return tasks
+            tasks
+        }
     }
 
 
