@@ -32,7 +32,7 @@ class MainActivity2 : AppCompatActivity() {
             recycler = findViewById(R.id.recycler)
 
 
-            val taskAdapter = TaskAdapter(applicationContext,theList)
+            val taskAdapter = TaskAdapter(this@MainActivity2,theList)
 
             recycler.layoutManager = LinearLayoutManager(this@MainActivity2)
             recycler.setHasFixedSize(true)

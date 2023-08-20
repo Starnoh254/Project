@@ -1,5 +1,6 @@
 package com.starnoh.project
 
+import com.starnoh.project.SignInActivity
 import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,8 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.starnoh.project.adapters.TaskAdapter
 import com.starnoh.project.helpers.SQLiteTaskHelper
 import java.util.Calendar
@@ -48,6 +51,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val button2 = findViewById<MaterialButton>(R.id.button2)
+        button2.setOnClickListener {
+            signOut()
+            val intent = Intent(this , SignInActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun showDatePickerDialog(){
@@ -69,5 +79,8 @@ class MainActivity : AppCompatActivity() {
         )
         datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
+    }
+    private fun signOut(){
+        Firebase.auth.signOut()
     }
 }

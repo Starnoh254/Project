@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
@@ -38,9 +39,21 @@ class TaskAdapter( val context : Context ,  var itemList: List<Tasks>) : Recycle
         holder.title.text = item.taskTitle
         holder.body.text = item.taskDescription
         holder.deleteById.setOnClickListener {
-            val helper = SQLiteTaskHelper.getInstance(context = context)
-            helper.deleteTaskById(holder.body.text.toString())
-            holder.root.visibility = View.GONE
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Delete")
+            builder.setMessage("Are you sure you want to delete the task ?")
+            builder.setPositiveButton("Yes"){dialog,which ->
+                val helper = SQLiteTaskHelper.getInstance(context = context)
+                helper.deleteTaskById(holder.body.text.toString())
+                holder.root.visibility = View.GONE
+            }
+
+            builder.setNegativeButton("NO"){dialog,which ->
+
+            }
+            builder.setCancelable(false)
+            builder.show()
+
         }
     }
 }
