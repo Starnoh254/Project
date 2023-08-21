@@ -8,52 +8,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
 
-
-
-
-    <EditText
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Task title"
-        android:layout_margin="30dp"
-        android:id="@+id/taskTitle"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Task Description"
-        android:layout_margin="30dp"
-        android:id="@+id/taskDescription"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Due date"
-        android:layout_margin="30dp"
-        android:id="@+id/dueDate"/>
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add task"
-        android:layout_margin="80dp"
-        android:id="@+id/addTask"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Tasks"
-        android:layout_marginLeft="80dp"
-        android:id="@+id/viewTask"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign out "
-        android:layout_marginLeft="80dp"
-        android:id="@+id/button2"/>
-
-
-
+        android:id="@+id/bottom_nav"
+        app:menu="@menu/bottom_nav"/>
 
 </LinearLayout>

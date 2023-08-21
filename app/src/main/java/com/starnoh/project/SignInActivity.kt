@@ -4,6 +4,7 @@ package com.starnoh.project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -109,9 +110,13 @@ class SignInActivity : AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this){ authresult ->
                 if (authresult.isSuccessful){
+                    Log.d("check","amefika hapa")
+
                     startActivity(Intent(this,MainActivity::class.java))
+                    Log.d("check2","amefika hapa")
                 }
                 else{
+                    Log.d("nnnn","reached here")
                     Toast.makeText(this, "Signin failed", Toast.LENGTH_SHORT).show()
                 }
 
