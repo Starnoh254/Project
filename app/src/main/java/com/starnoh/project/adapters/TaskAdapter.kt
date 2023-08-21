@@ -1,21 +1,20 @@
 package com.starnoh.project.adapters
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.starnoh.project.R
+import com.starnoh.project.ViewTaskFragment
 import com.starnoh.project.helpers.SQLiteTaskHelper
 import com.starnoh.project.models.Tasks
 
-class TaskAdapter( val context : Context ,  var itemList: List<Tasks>) : RecyclerView.Adapter<TaskAdapter.ViewHolder>(){
+class TaskAdapter(val context: Context, var itemList: List<Tasks>) : RecyclerView.Adapter<TaskAdapter.ViewHolder>(){
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var title = itemView.findViewById<MaterialTextView>(R.id.heading)

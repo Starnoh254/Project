@@ -1,7 +1,10 @@
 package com.starnoh.project
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.starnoh.project.adapters.TaskAdapter
@@ -10,9 +13,11 @@ import com.starnoh.project.models.Tasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+
 import java.util.ArrayList
 
-class MainActivity2 : AppCompatActivity() {
+
+class ViewTaskFragment : Fragment() {
 
     private val scope = MainScope()
     private lateinit var theList: ArrayList<Tasks>
@@ -20,24 +25,34 @@ class MainActivity2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
 
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+
+        val view = inflater.inflate(R.layout.fragment_view_task, container, false)
         loadDataFromDatabase()
+        return view
     }
 
     private fun loadDataFromDatabase(){
         scope.launch(Dispatchers.Main){
-            val help = SQLiteTaskHelper.getInstance(applicationContext)
+            val help = SQLiteTaskHelper.getInstance(requireContext())
             theList = help.getAllItems()
-            recycler = findViewById(R.id.recycler)
+            recycler = requireView().findViewById(R.id.recycler)
 
 
-            val taskAdapter = TaskAdapter(this@MainActivity2,theList)
+            val taskAdapter = TaskAdapter(requireContext(),theList)
 
-            recycler.layoutManager = LinearLayoutManager(this@MainActivity2)
+            recycler.layoutManager = LinearLayoutManager(requireContext())
             recycler.setHasFixedSize(true)
 
             recycler.adapter = taskAdapter
         }
     }
+
 }
