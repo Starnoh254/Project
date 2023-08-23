@@ -37,12 +37,7 @@
             android:layout_margin="80dp"
             android:id="@+id/addTask"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Tasks"
-            android:layout_marginLeft="80dp"
-            android:id="@+id/viewTask"/>
+
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"

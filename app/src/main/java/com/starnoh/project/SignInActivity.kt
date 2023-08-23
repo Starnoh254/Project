@@ -21,14 +21,9 @@ class SignInActivity : AppCompatActivity() {
     companion object {
         private const val RC_SIGN_IN = 123
     }
-
     private lateinit var button: MaterialButton
-    private lateinit var defaultTheme: MaterialButton
-    private lateinit var dark: MaterialButton
-    private lateinit var light: MaterialButton
     private lateinit var mAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,36 +42,6 @@ class SignInActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this,gso)
-
-        val themePreference = getSharedPreferences("ThemePreference", MODE_PRIVATE)
-        val editor = themePreference.edit()
-
-        defaultTheme = findViewById(R.id.defaultTheme)
-        defaultTheme.setOnClickListener {
-            val theme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            editor.putInt("selectedTheme",theme)
-            editor.apply()
-            AppCompatDelegate.setDefaultNightMode(theme)
-
-        }
-
-        dark = findViewById(R.id.Dark)
-        dark.setOnClickListener {
-            val theme = AppCompatDelegate.MODE_NIGHT_YES
-            editor.putInt("selectedTheme",theme)
-            editor.apply()
-            AppCompatDelegate.setDefaultNightMode(theme)
-        }
-        light = findViewById(R.id.light)
-        light.setOnClickListener {
-            val theme = AppCompatDelegate.MODE_NIGHT_NO
-            editor.putInt("selectedTheme",theme)
-            editor.apply()
-            AppCompatDelegate.setDefaultNightMode(theme)
-        }
-
-
-
 
         button = findViewById(R.id.button)
         button.setOnClickListener {

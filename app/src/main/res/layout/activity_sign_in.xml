@@ -15,26 +15,6 @@
         android:id="@+id/button"
         android:text="Sign with Google"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/defaultTheme"
-        android:text="Default Theme"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Dark"
-        android:text="Dark"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/light"
-        android:text="Light theme"/>
-
-
-
 
 
 </LinearLayout>

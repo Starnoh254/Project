@@ -17,14 +17,20 @@ class MainActivity : AppCompatActivity() {
 
         val homeFragment = AddTaskFragment()
         val viewTaskFragment = ViewTaskFragment()
+        val settings = Settings()
 
-        changeFragment(homeFragment)
+        if (savedInstanceState == null){
+            changeFragment(homeFragment)
+        }
+
+
 
         var bottom_nav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottom_nav.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home -> changeFragment(homeFragment)
                 R.id.task -> changeFragment(viewTaskFragment)
+                R.id.settings -> changeFragment(settings)
             }
             true
         }

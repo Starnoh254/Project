@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+       <com.google.android.material.textview.MaterialTextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Display"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           android:layout_margin="20dp"/>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:src="@drawable/baseline_dark_mode_24"
+               android:layout_marginLeft="20dp"/>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/clickableUi"
+               android:orientation="vertical">
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Theme"
+                   android:textSize="15sp"
+                   android:textStyle="bold"
+                   android:layout_marginLeft="10dp"/>
+               <com.google.android.material.textview.MaterialTextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Light theme"
+                   android:layout_marginLeft="10dp"
+                   android:textSize="12sp"/>
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+   </LinearLayout>
+
+</FrameLayout>
